@@ -111,7 +111,7 @@ openssl_sign($data, $signature, $private_key, OPENSSL_ALGO_SHA256);
 // Store the signature in session (or database)
 $_SESSION['signature'] = base64_encode($signature);
 ```
-**Reading & Verifying the File**
+Reading & Verifying the File
 
 ```php
 $data = file_get_contents($tempFilename);
