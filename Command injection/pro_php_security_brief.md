@@ -4,7 +4,7 @@ Remote execution attacks aim to take control of an application by exploiting scr
 
 **How Remote Execution Works**
 
-1. Exploiting Template Systems:
+1. Exploiting Template Systems: 
 
 * Template systems replace placeholders with actual values. If PHP's eval() is used, attackers can inject malicious PHP code into user-submitted text, which the template system will execute.
 
