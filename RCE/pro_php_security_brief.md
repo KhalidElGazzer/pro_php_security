@@ -158,13 +158,43 @@ file; rm -rf / => becomes => 'file; rm -rf /'.
 echo hello; rm -rf / => becomes => echo hello\; rm -rf /
 ```
 
+**12. Do not use the `e` modifier in `preg_replace()`:**
 
+* It is deprecated and removed in modern PHP versions.
 
+* The `e` modifier in `preg_replace()` evaluates the replacement string as PHP code.
 
+Example:
 
+```
+<?php
+$pattern = "/\[(.+)\]/e";
+$replacement = "strtoupper('\\1')";  // Executed as PHP code
+$input = "[hello]";
 
+echo preg_replace($pattern, $replacement, $input);
+?>
+```
+The output will be:
+```
+strtoupper("hello");
+```
+For security reasons we use `preg_replace_callback()` instead of `preg_replace()`.
 
+```
+<?php
+$pattern = "/\[(.+?)\]/";
+$input = "[hello] world";
 
+$output = preg_replace_callback($pattern, function($matches) {
+    return strtoupper($matches[1]);  // Convert match to uppercase
+}, $input);
 
-
+echo $output;
+?>
+```
+Output:
+```
+HELLO world
+```
 
