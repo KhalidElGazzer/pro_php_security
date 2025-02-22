@@ -98,6 +98,7 @@ if ($hashnow === $_SESSION['hashnow']) {
 
 
 **Example: Signing & Verifying Data**
+
 Writing & Signing the File
 ```php
 $data = "Sensitive Information";
