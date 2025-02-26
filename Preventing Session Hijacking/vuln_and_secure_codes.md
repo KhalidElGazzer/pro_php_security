@@ -24,19 +24,18 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 ```
 
 ### Vulnerability:
-- The script accepts a session ID from the URL ($_GET['PHPSESSID']), making it vulnerable to session fixation.
+- The script accepts a session ID from the URL (`$_GET['PHPSESSID'])`, making it vulnerable to session fixation.
 - An attacker can force a user to use a known session ID and hijack the session after the user logs in.
 
 ### Mitigation:
 - Regenerate the session ID after login.
-- Disable URL-based session IDs by setting session.use_only_cookies to 1.
+- Disable URL-based session IDs by setting `session.use_only_cookies` to ```1```.
 
 ```php
 <?php
 // Force cookies-only sessions
 ini_set('session.use_only_cookies', TRUE);
-ini_set('session.use_trans_sid', FALSE);
-
+ini_set('session.use_trans_sid', FALSE); //Note from the URLS
 // Start the session
 session_start();
 
@@ -44,7 +43,7 @@ session_start();
 if (isset($_POST['username']) && isset($_POST['password'])) {
     // Authenticate user
     $_SESSION['authenticated'] = true;
-    $_SESSION['username'] = $_POST['username'];
+    $_SESSION['username'] = $_POST['username'];     // by default, php regenerate tmp file with the name of session id and keep data like this (authenticated|b:1;username|s:8:"john_doe";) in.
 
     // Regenerate session ID to prevent fixation
     session_regenerate_id(true);
@@ -252,5 +251,5 @@ if (isset($_SESSION['user_ip']) && $_SESSION['user_ip'] !== $_SERVER['REMOTE_ADD
 $_SESSION['user_id'] = 123;
 ?>
 ```
-```
+
 
